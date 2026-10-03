@@ -1,0 +1,583 @@
+<meta name='viewport' content='width=device-width, initial-scale=1'/><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Greeting Card Maker</title>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <header>
+        <h1>✨ Greeting Card Maker</h1>
+        <p>Create a beautiful greeting card for any occasion</p>
+    </header>
+
+    <main class="container">
+
+        <!-- USER FORM -->
+        <section class="form-section">
+
+            <h2>Create Your Card</h2>
+
+            <label for="occasion">Choose Occasion</label>
+
+            <select id="occasion" onchange="changeOccasion()">
+                <option value="birthday">🎂 Birthday</option>
+                <option value="anniversary">💖 Anniversary</option>
+                <option value="congratulations">🎉 Congratulations</option>
+                <option value="thankyou">🙏 Thank You</option>
+                <option value="goodluck">🍀 Good Luck</option>
+                <option value="friendship">🤝 Friendship</option>
+                <option value="festival">🪔 Festival</option>
+                <option value="newyear">🎆 New Year</option>
+            </select>
+
+            <label for="receiver">Recipient's Name</label>
+            <input
+                type="text"
+                id="receiver"
+                placeholder="Enter recipient's name"
+                oninput="updateCard()"
+            >
+
+            <label for="sender">Your Name</label>
+            <input
+                type="text"
+                id="sender"
+                placeholder="Enter your name"
+                oninput="updateCard()"
+            >
+
+            <label for="message">Your Message</label>
+
+            <textarea
+                id="message"
+                placeholder="Write your personal message..."
+                oninput="updateCard()"
+            ></textarea>
+
+            <button onclick="resetCard()" class="reset-btn">
+                Reset
+            </button>
+
+        </section>
+
+
+        <!-- CARD PREVIEW -->
+        <section class="preview-section">
+
+            <h2>Live Preview</h2>
+
+            <div id="card" class="greeting-card birthday-card">
+
+                <div class="emoji" id="cardEmoji">🎂</div>
+
+                <h3 id="cardTitle">Happy Birthday!</h3>
+
+                <h1 id="cardReceiver">Your Name</h1>
+
+                <p id="cardMessage">
+                    Wishing you a wonderful and joyful day!
+                </p>
+
+                <p class="from">
+                    With best wishes,<br>
+                    <strong id="cardSender">Your Name</strong>
+                </p>
+
+            </div>
+
+            <button onclick="printCard()" class="print-btn">
+                🖨️ Print / Save Card
+            </button>
+
+        </section>
+
+    </main>
+
+
+    <footer>
+        <p>Made with ❤️ using HTML, CSS & JavaScript</p>
+    </footer>
+
+
+    <script>
+
+        const occasions = {
+
+            birthday: {
+                emoji: "🎂",
+                title: "Happy Birthday!",
+                message: "Wishing you a wonderful and joyful birthday!",
+                className: "birthday-card"
+            },
+
+            anniversary: {
+                emoji: "💖",
+                title: "Happy Anniversary!",
+                message: "Wishing you both many more beautiful years together!",
+                className: "anniversary-card"
+            },
+
+            congratulations: {
+                emoji: "🎉",
+                title: "Congratulations!",
+                message: "Congratulations on your wonderful achievement!",
+                className: "congratulations-card"
+            },
+
+            thankyou: {
+                emoji: "🙏",
+                title: "Thank You!",
+                message: "Thank you for being such a wonderful person!",
+                className: "thankyou-card"
+            },
+
+            goodluck: {
+                emoji: "🍀",
+                title: "Good Luck!",
+                message: "Wishing you success and good luck in everything you do!",
+                className: "goodluck-card"
+            },
+
+            friendship: {
+                emoji: "🤝",
+                title: "Happy Friendship Day!",
+                message: "Lucky to have a wonderful friend like you!",
+                className: "friendship-card"
+            },
+
+            festival: {
+                emoji: "🪔",
+                title: "Happy Festival!",
+                message: "May this festival bring happiness, peace and prosperity!",
+                className: "festival-card"
+            },
+
+            newyear: {
+                emoji: "🎆",
+                title: "Happy New Year!",
+                message: "May the new year bring you happiness, success and new opportunities!",
+                className: "newyear-card"
+            }
+
+        };
+
+
+        function updateCard() {
+
+            const receiver =
+                document.getElementById("receiver").value;
+
+            const sender =
+                document.getElementById("sender").value;
+
+            const message =
+                document.getElementById("message").value;
+
+
+            document.getElementById("cardReceiver").textContent =
+                receiver || "Your Name";
+
+            document.getElementById("cardSender").textContent =
+                sender || "Your Name";
+
+            document.getElementById("cardMessage").textContent =
+                message || occasions[
+                    document.getElementById("occasion").value
+                ].message;
+        }
+
+
+        function changeOccasion() {
+
+            const selected =
+                document.getElementById("occasion").value;
+
+            const data = occasions[selected];
+
+            const card =
+                document.getElementById("card");
+
+
+            document.getElementById("cardEmoji").textContent =
+                data.emoji;
+
+            document.getElementById("cardTitle").textContent =
+                data.title;
+
+            document.getElementById("cardMessage").textContent =
+                data.message;
+
+
+            card.className =
+                "greeting-card " + data.className;
+
+            updateCard();
+        }
+
+
+        function resetCard() {
+
+            document.getElementById("receiver").value = "";
+            document.getElementById("sender").value = "";
+            document.getElementById("message").value = "";
+
+            document.getElementById("occasion").value =
+                "birthday";
+
+            changeOccasion();
+        }
+
+
+        function printCard() {
+
+            window.print();
+
+        }
+
+    </script>
+
+</body>
+</html><style>* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+body {
+    font-family: Arial, sans-serif;
+    background: #f4f6fb;
+    color: #222;
+    min-height: 100vh;
+}
+
+
+/* HEADER */
+
+header {
+    text-align: center;
+    padding: 30px 15px;
+    background: white;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+}
+
+header h1 {
+    font-size: 32px;
+    margin-bottom: 8px;
+}
+
+header p {
+    color: #666;
+}
+
+
+/* MAIN CONTAINER */
+
+.container {
+    width: 90%;
+    max-width: 1100px;
+    margin: 40px auto;
+
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 35px;
+}
+
+
+/* FORM */
+
+.form-section,
+.preview-section {
+    background: white;
+    padding: 25px;
+    border-radius: 18px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+}
+
+
+h2 {
+    margin-bottom: 20px;
+}
+
+
+/* LABELS */
+
+label {
+    display: block;
+    margin-top: 15px;
+    margin-bottom: 7px;
+    font-weight: bold;
+}
+
+
+/* INPUTS */
+
+input,
+select,
+textarea {
+    width: 100%;
+    padding: 13px;
+
+    border: 1px solid #ddd;
+    border-radius: 10px;
+
+    font-size: 15px;
+    outline: none;
+}
+
+
+input:focus,
+select:focus,
+textarea:focus {
+    border-color: #7b61ff;
+}
+
+
+textarea {
+    height: 120px;
+    resize: vertical;
+}
+
+
+/* BUTTONS */
+
+button {
+    border: none;
+    padding: 13px 20px;
+    border-radius: 10px;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+
+.reset-btn {
+    margin-top: 20px;
+    background: #333;
+    color: white;
+}
+
+
+.print-btn {
+    width: 100%;
+    margin-top: 20px;
+    background: #6c5ce7;
+    color: white;
+}
+
+
+button:hover {
+    opacity: 0.85;
+}
+
+
+/* CARD */
+
+.greeting-card {
+    min-height: 430px;
+
+    padding: 45px 30px;
+
+    border-radius: 20px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    text-align: center;
+
+    transition: 0.3s;
+}
+
+
+.emoji {
+    font-size: 60px;
+    margin-bottom: 15px;
+}
+
+
+.greeting-card h3 {
+    font-size: 28px;
+    margin-bottom: 15px;
+}
+
+
+.greeting-card h1 {
+    font-size: 35px;
+    margin-bottom: 20px;
+}
+
+
+.greeting-card p {
+    font-size: 17px;
+    line-height: 1.6;
+    max-width: 450px;
+}
+
+
+.from {
+    margin-top: 25px;
+}
+
+
+/* DIFFERENT CARD THEMES */
+
+
+/* Birthday */
+
+.birthday-card {
+    background: linear-gradient(
+        135deg,
+        #ffe0ec,
+        #fff3b0
+    );
+}
+
+
+/* Anniversary */
+
+.anniversary-card {
+    background: linear-gradient(
+        135deg,
+        #ffd6e7,
+        #ffe8f0
+    );
+}
+
+
+/* Congratulations */
+
+.congratulations-card {
+    background: linear-gradient(
+        135deg,
+        #d9f7ff,
+        #e5dcff
+    );
+}
+
+
+/* Thank You */
+
+.thankyou-card {
+    background: linear-gradient(
+        135deg,
+        #fff1c9,
+        #ffe1b5
+    );
+}
+
+
+/* Good Luck */
+
+.goodluck-card {
+    background: linear-gradient(
+        135deg,
+        #d8f8df,
+        #e9ffd9
+    );
+}
+
+
+/* Friendship */
+
+.friendship-card {
+    background: linear-gradient(
+        135deg,
+        #dce9ff,
+        #e5dcff
+    );
+}
+
+
+/* Festival */
+
+.festival-card {
+    background: linear-gradient(
+        135deg,
+        #ffe1b5,
+        #fff0c2
+    );
+}
+
+
+/* New Year */
+
+.newyear-card {
+    background: linear-gradient(
+        135deg,
+        #d8e9ff,
+        #e7ddff
+    );
+}
+
+
+/* FOOTER */
+
+footer {
+    text-align: center;
+    padding: 25px;
+    color: #777;
+}
+
+
+/* MOBILE */
+
+@media (max-width: 768px) {
+
+    .container {
+        grid-template-columns: 1fr;
+        width: 94%;
+        margin: 25px auto;
+    }
+
+
+    header h1 {
+        font-size: 26px;
+    }
+
+
+    .greeting-card {
+        min-height: 380px;
+    }
+
+
+    .greeting-card h3 {
+        font-size: 24px;
+    }
+
+
+    .greeting-card h1 {
+        font-size: 30px;
+    }
+
+}
+
+
+/* PRINT */
+
+@media print {
+
+    body * {
+        visibility: hidden;
+    }
+
+    #card,
+    #card * {
+        visibility: visible;
+    }
+
+    #card {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100vh;
+    }
+
+}</style>
